@@ -32,6 +32,13 @@ ifeq ($(CONFIG_ARCH_RAVELIN),y)
 dtbo-y += nxp/ravelin-nfc.dtbo
 endif
 
+ifeq ($(CONFIG_MONA_DTB),y)
+dtbo-y += st/parrot-mona-nfc.dtbo
+endif
+
+ifeq ($(CONFIG_MONAI_DTB),y)
+dtbo-y += st/parrot-monai-nfc.dtbo
+endif
 
 always-y        := $(dtb-y) $(dtbo-y)
 subdir-y        := $(dts-dirs)
