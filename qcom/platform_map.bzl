@@ -527,6 +527,7 @@ _platform_map = {
     "parrot": {
         "dtb_list": [
             # keep sorted
+            {"name": "parrot-moto-base.dtb", "product":"cuscoi",},
             {"name": "parrot-moto-base.dtb", "product":"paros",},
             {"name": "parrot-moto-base.dtb", "product":"mona",},
             {"name": "parrot-moto-base.dtb", "product":"paro",},
@@ -537,6 +538,8 @@ _platform_map = {
         ],
         "dtbo_list": [
             # keep sorted
+            {"name": "parrot-cuscoi-evb-overlay.dtbo", "product":"cuscoi",},
+            {"name": "parrot-cuscoi-noi-evb-overlay.dtbo", "product":"cuscoi",},
             {"name": "parrot-paros-evt-overlay.dtbo", "product": "paros",},
             {"name": "parrot-mona-evb-overlay.dtbo", "product": "mona",},
             {"name": "parrot-paro-evb-overlay.dtbo", "product": "paro",},
@@ -546,7 +549,7 @@ _platform_map = {
             {"name": "parrot-mumba-evb-overlay.dtbo", "product": "mumba",},
             {"name": "parrot-mumba-5200ma-evb-overlay.dtbo", "product": "mumba",},
             {"name": "parrot-lamy-evb-overlay.dtbo", "product": "lamy",},
-	],
+        ],
     },
     "waipio": {
         "dtb_list": [
