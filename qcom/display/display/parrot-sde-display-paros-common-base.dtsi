@@ -7,6 +7,7 @@
 #include "dsi-panel-mot-dummy-qhd-video.dtsi"
 #include <dt-bindings/clock/qcom,dispcc-parrot.h>
 #include "dsi-panel-mot-tianma-ili7807s-678-1080x2388-dsc-vid-120hz.dtsi"
+#include "dsi-panel-mot-djn-ft8725-678-1080x2388-dsc-vid-120hz.dtsi"
 
 &pm6150l_gpios {
 	display_panel_supply_ctrl {
@@ -73,7 +74,7 @@
 	/delete-node/ display_gpio_regulator@1;
 	/delete-node/ display_gpio_regulator@2;
 	/delete-node/ display_gpio_regulator@3;
-	display_panel_avdd: display_gpio_regulator@1 {
+	display_panel_avdd: display_gpio_regulator@2 {
 		compatible = "qti-regulator-fixed";
 		regulator-name = "display_panel_avdd";
 		regulator-min-microvolt = <5500000>;
@@ -87,7 +88,7 @@
 		pinctrl-0 = <&display_panel_avdd_default>;
 	};
 
-	display_panel_avee: display_gpio_regulator@2 {
+	display_panel_avee: display_gpio_regulator@3 {
 		compatible = "qti-regulator-fixed";
 		regulator-name = "display_panel_avee";
 		regulator-min-microvolt = <5500000>;
@@ -199,26 +200,37 @@
 	qcom,mdss-dsi-bl-min-level = <9>;
 	qcom,mdss-dsi-bl-max-level = <2047>;
 	qcom,mdss-brightness-max-level = <2047>;
-	qcom,mdss-dsi-bl-default-level = <1810>;
+	qcom,mdss-dsi-bl-default-level = <1023>;
 	qcom,platform-reset-gpio = <&tlmm 98 0>;
 	qcom,platform-te-gpio = <&tlmm 99 0>;
 	qcom,bl-dsc-cmd-state = "dsi_hs_mode";
 	qcom,mdss-dsi-bl-inverted-dbv;
 	qcom,tp_state_check_enable;
-        qcom,tp_state_need_reset;
+
+	qcom,mdss-dsi-bl-enable-delay-ms = <5>;
+
+	qcom,mdss-dsi-cmd-set-off-delay-ms = <1>;
 
 	qcom,dsi-select-clocks = "pll_byte_clk0", "pll_dsi_clk0";
+
+	qcom,platform-need-execute-shutdown;
+	touch-rst-pin = <&tlmm 131 0>;
+	touch-int-pin = <&tlmm 65 0>;
+	touch-cs-pin = <&tlmm 13 0>;
+
+	qcom,ulps-enabled;
+	qcom,suspend-ulps-enabled;
 
 	qcom,dsi-supported-dfps-list = <120 90 60 45>;
 	qcom,mdss-dsi-pan-enable-dynamic-fps;
 	qcom,mdss-dsi-pan-fps-update = "dfps_immediate_porch_mode_vfp";
-
+/*
 	qcom,mdss-dsi-hbm-on-command = [39 01 00 00 00 00 03 51 03 FF];
 	qcom,mdss-dsi-hbm-on-command-state =  "dsi_lp_mode";
 	qcom,mdss-dsi-hbm-off-command = [39 01 00 00 00 00 03 51 03 33];
 	qcom,mdss-dsi-hbm-off-command-state =  "dsi_lp_mode";
 	qcom,mdss-dsi-hbm-type = "lcd-dcs-wled";
-
+*/
 	qcom,esd-check-enabled;
 	qcom,mdss-dsi-panel-status-check-mode = "reg_read";
 	qcom,mdss-dsi-panel-status-command = [06 01 00 01 00 00 01 0a];
@@ -226,11 +238,64 @@
 	qcom,mdss-dsi-panel-status-value = <0x9c>;
 	qcom,mdss-dsi-panel-status-read-length = <1>;
 
+	qcom,mdss-dsi-panel-supplier = "tianma";
 	qcom,mdss-dsi-display-timings {
 		timing@0 {
 			/*120HZ timing*/
 			qcom,mdss-dsi-panel-phy-timings = [00 19 06 06 15 14 07
 				06 07 02 04 00 16 0B];
+			qcom,display-topology = <1 1 1>;
+			qcom,default-topology-index = <0>;
+		};
+	};
+
+};
+
+&mot_djn_ft8725_678_1080x2388_dsc_vid_120hz {
+	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
+	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_i2c";
+	//qcom,mdss-dsi-sec-bl-pmic-control-type = "bl_ctrl_dcs";
+	qcom,mdss-dsi-no-panel-on-read-support;
+	qcom,mdss-dsi-bl-min-level = <9>;
+	qcom,mdss-dsi-bl-max-level = <2047>;
+	qcom,mdss-brightness-max-level = <2047>;
+	qcom,mdss-dsi-bl-default-level = <1023>;
+	qcom,platform-reset-gpio = <&tlmm 98 0>;
+	qcom,platform-te-gpio = <&tlmm 99 0>;
+	qcom,bl-dsc-cmd-state = "dsi_hs_mode";
+	qcom,mdss-dsi-bl-inverted-dbv;
+	qcom,tp_state_check_enable;
+
+	qcom,dsi-select-clocks = "pll_byte_clk0", "pll_dsi_clk0";
+
+	qcom,platform-need-execute-shutdown;
+
+	qcom,ulps-enabled;
+	qcom,suspend-ulps-enabled;
+
+	qcom,dsi-supported-dfps-list = <120 90 60 45>;
+	qcom,mdss-dsi-pan-enable-dynamic-fps;
+	qcom,mdss-dsi-pan-fps-update = "dfps_immediate_porch_mode_vfp";
+/*
+	qcom,mdss-dsi-hbm-on-command = [39 01 00 00 00 00 03 51 FF 0F];
+	qcom,mdss-dsi-hbm-on-command-state =  "dsi_lp_mode";
+	qcom,mdss-dsi-hbm-off-command = [39 01 00 00 00 00 03 51 CC 0C];
+	qcom,mdss-dsi-hbm-off-command-state =  "dsi_lp_mode";
+	qcom,mdss-dsi-hbm-type = "lcd-dcs-wled";
+*/
+	qcom,esd-check-enabled;
+	qcom,mdss-dsi-panel-status-check-mode = "reg_read";
+	qcom,mdss-dsi-panel-status-command = [06 01 00 01 00 00 01 0a];
+	qcom,mdss-dsi-panel-status-command-state = "dsi_lp_mode";
+	qcom,mdss-dsi-panel-status-value = <0x9c>;
+	qcom,mdss-dsi-panel-status-read-length = <1>;
+
+	qcom,mdss-dsi-panel-supplier = "djn";
+	qcom,mdss-dsi-display-timings {
+		timing@0 {
+			/*120HZ timing*/
+			qcom,mdss-dsi-panel-phy-timings = [00 1d 08 07 17 16 07
+				07 08 02 04 00 19 0c];
 			qcom,display-topology = <1 1 1>;
 			qcom,default-topology-index = <0>;
 		};
@@ -254,7 +319,7 @@
                 aw99703,switch-freq = <1>; /* 1000kHz(default) */
                 aw99703,auto-freq-high = <0x10>;
                 aw99703,auto-freq-low = <0x05>;
-                aw99703,bl-fscal-led = <0x17>; /* 23.2mA */
+                aw99703,bl-fscal-led = <0x1A>; /* 25.6mA */
                 aw99703,bl-channel = <3>; /* 3 led string */
                 aw99703,turn-on-ramp = <0x00>; /* 512us */
                 aw99703,turn-off-ramp = <0x04>; /* 8ms */
@@ -262,29 +327,31 @@
                 aw99703,i2c-trans-dim = <1>; /* 128ms */
                 aw99703,pwm-mode = <1>; /* 1 pwm enable,0 PWM disable */
                 aw99703,map-type = <0>; /* 0 exponential, 4 linear */
-		current-align-type = <1>;
+		current-align-type = <3>; /* 0 none, 1 450nit, 2 1000nit, 3 gamma15 */
                 aw99703,work-mode = <1>; /* backlight */
-		aw99703,default-brightness = <1810>;
+		aw99703,default-brightness = <1023>;
 
 		/* ktd3136*/
 		ktd,hwen-gpio = <&pm6150l_gpios 10 0>;
                 ktd,using-lsb;
                 ktd,pwm-frequency = <1>; /* 1MHZ */
-                ktd,bl-fscal-led = <0xC9>; /* 25mA */
+                ktd,bl-fscal-led = <0xD1>; /* 25.8mA */
                 ktd,turn-on-ramp = <0x00>;
                 ktd,turn-off-ramp = <0x04>;
-                ktd,pwm-trans-dim = <0>;
+                ktd,pwm-trans-dim = <4>;
                 ktd,i2c-trans-dim = <128>;
+                ktd,pwm-hysteresis = <8>;
+                ktd,pwm-mode;
                 ktd,skip-first-trans;
                 ktd,reset-trans-delay;
-                ktd,bl-channel = <3>;
+                ktd,bl-channel = <3>; /* 3 led string */
                 ktd,ovp-level = <32>;  /*25.9v or 32v */
                 ktd,ocp-level = <2600>;
                 ktd,switching-frequency = <1>;
                 ktd,inductor-current = <1>;
                 ktd,default-brightness = <1023>;
                 ktd,map-type = <0>; /* 0 exponential, 1 linear */
-                ktd,current-align-type = <0x01>;
+                ktd,current-align-type = <0x03>; /* 0 none, 1 450nit, 2 1000nit, 3 gamma15*/
 	};
 };
 
@@ -299,5 +366,8 @@
 &qupv3_se9_spi {
 	ilitek@1{
 		panel = <&mot_tm_ili7807s_678_1080x2388_dsc_vid_120hz>;
+	};
+	focaltech@2{
+		panel = <&mot_djn_ft8725_678_1080x2388_dsc_vid_120hz>;
 	};
 };
