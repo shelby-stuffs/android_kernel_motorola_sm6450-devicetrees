@@ -2,6 +2,7 @@
 /plugin/;
 
 #include "parrot-wcn3990-bt.dtsi"
+#include "parrot-wcn3990-bt-cuscoi.dtsi"
 
 / {
 	model = "cuscoi";
