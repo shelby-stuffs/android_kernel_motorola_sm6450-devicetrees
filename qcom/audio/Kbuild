@@ -32,6 +32,20 @@ dtbo-$(CONFIG_ARCH_PARROT) += parrot-audio.dtbo \
                  parrot-audio-qrd-wcn6755.dtbo \
                  parrot-audio-atp.dtbo
 else
+
+ifeq ($(CONFIG_CUSCO_DTB),y)
+dtbo-$(CONFIG_ARCH_PARROT) += parrot-audio.dtbo \
+                 parrot-audio-moto-cusco-evb.dtbo
+dtbo-$(CONFIG_ARCH_PARROT) += parrot-audio.dtbo \
+                 parrot-audio-moto-cuscoi-evb.dtbo \
+                 parrot-audio-moto-cuscoi-noi-evb.dtbo
+endif
+
+ifeq ($(CONFIG_PARO_DTB),y)
+dtbo-$(CONFIG_ARCH_PARROT) += parrot-audio.dtbo \
+                 parrot-audio-moto-paro-evb.dtbo
+endif
+
 ifeq ($(CONFIG_PAROS_DTB),y)
 dtbo-$(CONFIG_ARCH_PARROT) += parrot-audio.dtbo \
                  parrot-audio-moto-paros-evt.dtbo
