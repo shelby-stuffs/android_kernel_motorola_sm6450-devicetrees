@@ -192,6 +192,7 @@
 		ilitek,interpolation-ctrl;
 		mmi,usb-charger-detection;
 		mmi,enable-gestures;
+		mmi,disable-gesture-sensor;
 		mmi,supported_gesture_type = <0x06>;
 		status = "ok";
 	};
@@ -215,6 +216,7 @@
 		focaltech,interpolation-ctrl;
 		mmi,usb-charger-detection;
 		mmi,enable-gestures;
+		mmi,disable-gesture-sensor;
 		mmi,supported_gesture_type = <0x06>;
     };
 };
