@@ -21,6 +21,7 @@
 
 &reserved_memory {
 	/delete-node/ qcom_ramoops;
+	/delete-node/ hyp_region1@0x82200000;
 };
 
 &firmware {
