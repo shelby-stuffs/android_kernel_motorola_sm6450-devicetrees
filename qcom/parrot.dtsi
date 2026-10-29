@@ -50,6 +50,16 @@
 
 	reserved_memory: reserved-memory { };
 
+	mem_offline: mem-offline {
+		compatible = "qcom,mem-offline";
+		offline-sizes = <0x1 0x40000000 0x0 0x40000000>,
+				<0x1 0xc0000000 0x0 0x80000000>,
+				<0x2 0xc0000000 0x1 0x40000000>;
+		granule = <512>;
+		mboxes = <&qmp_aop 0>;
+		status = "disabled";
+	};
+
 	qcom,gunyah-panic-notifier {
 		compatible = "qcom,gh-panic-notifier";
 		qcom,primary-vm;
@@ -411,7 +421,7 @@
 		alloc-ranges = <0x0 0x00000000 0x0 0xffffffff>;
 		reusable;
 		alignment = <0x0 0x400000>;
-		size = <0x0 0x1000000>;
+		size = <0x0 0x1C00000>;
 	};
 
 	sdsp_mem: sdsp_region {
@@ -464,7 +474,7 @@
 		alloc-ranges = <0x0 0x00000000 0x0 0xffffffff>;
 		reusable;
 		alignment = <0x0 0x400000>;
-		size = <0x0 0x1000000>;
+		size = <0x0 0x2000000>;
 	};
 
 };
@@ -2655,7 +2665,7 @@
 	thermal_zones: thermal-zones {
 	};
 
-	qcom_ramoops {
+	qcom_ramoops:qcom_ramoops {
 		compatible = "qcom,ramoops";
 		memory-region = <&ramoops_mem>;
 		pmsg-size = <0x200000>;
