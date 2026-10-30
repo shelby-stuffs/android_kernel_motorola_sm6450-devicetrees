@@ -1,5 +1,9 @@
 /dts-v1/;
 
+#if __has_include(<generated/autoconf.h>)
+#include <generated/autoconf.h>
+#endif
+
 #include "parrot.dtsi"
 
 / {
@@ -22,6 +26,15 @@
 &reserved_memory {
 	/delete-node/ qcom_ramoops;
 	/delete-node/ hyp_region1@0x82200000;
+
+#if defined(CONFIG_PAROS_DTB)
+	/delete-node/ hyp_region@0x83600000;
+
+	hyp_mem: hyp_region@80000000 {
+		no-map;
+		reg = <0x0 0x80000000 0x0 0x600000>;
+	};
+#endif
 };
 
 &firmware {
