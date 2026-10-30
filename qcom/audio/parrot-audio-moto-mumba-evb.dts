@@ -14,5 +14,6 @@
 
 &waipio_snd {
 	qcom,ext-disp-audio-rx = <0>;
+	qcom,mi2s-audio-intf = <0>;
 };
 
