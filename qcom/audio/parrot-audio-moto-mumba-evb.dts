@@ -12,3 +12,7 @@
 	qcom,board-id = <0x41 0x9000>, <(LABR_RADIO << 8 | 0x41) 0x9000>, <(EMEAAP_RADIO << 8 | 0x41) 0x9000>;
 };
 
+&waipio_snd {
+	qcom,ext-disp-audio-rx = <0>;
+};
+
